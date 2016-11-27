@@ -1,10 +1,8 @@
 package com.example.praveen.privacycheck;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.Settings;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Praveen on 11/10/2016.
@@ -36,6 +33,7 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.icon.setImageDrawable(apps.get(position).getIcon());
         holder.name.setText(apps.get(position).getAppName());
+
     }
 
     @Override
@@ -43,7 +41,8 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.MyViewHo
         return apps.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name;
         public ImageView icon;
 
@@ -52,21 +51,17 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.MyViewHo
 
             icon = (ImageView) view.findViewById(R.id.app_icon);
             name = (TextView) view.findViewById(R.id.app_name);
+            view.setOnClickListener(this);
+        }
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.i(name.getText().toString(), "Clicked!");
-                    final Intent i = new Intent();
-                    i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    i.addCategory(Intent.CATEGORY_DEFAULT);
-                    i.setData(Uri.parse("package:" + apps.get(getAdapterPosition()).getPackageName()));
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                    view.getContext().startActivity(i);
-                }
-            });
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), PermissionsDisplayActivity.class);
+            Bundle bundle = new Bundle();
+            AppData clicked = apps.get(getAdapterPosition());
+            bundle.putParcelable(Constants.APP_NAME, clicked);
+            intent.putExtras(bundle);
+            view.getContext().startActivity(intent);
         }
     }
 }
