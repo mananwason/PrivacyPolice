@@ -7,7 +7,7 @@ import android.os.Parcelable;
 /**
  * Created by Praveen on 11/10/2016.
  */
-public class AppData implements Parcelable {
+public class AppData implements Parcelable, Comparable<AppData> {
     private String appName, packageName, versionName;
     private int versionCode = 0;
     private Drawable icon;
@@ -102,5 +102,10 @@ public class AppData implements Parcelable {
         parcel.writeString(versionName);
         parcel.writeInt(versionCode);
         parcel.writeStringArray(permissions);
+    }
+
+    @Override
+    public int compareTo(AppData appData) {
+        return appName.toLowerCase().compareTo(appData.getAppName().toLowerCase());
     }
 }

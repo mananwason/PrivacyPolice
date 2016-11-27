@@ -63,7 +63,7 @@ public class PermissionsDisplayActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.app_list_recycler_view);
-        adapter = new PermissionsAdapter(sortedPermissions);
+        adapter = new PermissionsAdapter(sortedPermissions, currentApp);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext()));

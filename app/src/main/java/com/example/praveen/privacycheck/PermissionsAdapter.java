@@ -1,5 +1,8 @@
 package com.example.praveen.privacycheck;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +18,11 @@ import java.util.List;
 
 public class PermissionsAdapter extends RecyclerView.Adapter<PermissionsAdapter.MyViewHolder> {
     private List<String> permissions;
+    private AppData currentApp;
 
-    public PermissionsAdapter(List<String> permissionsList) {
+    public PermissionsAdapter(List<String> permissionsList, AppData currentApp) {
         this.permissions = permissionsList;
+        this.currentApp = currentApp;
     }
 
     @Override
@@ -56,6 +61,10 @@ public class PermissionsAdapter extends RecyclerView.Adapter<PermissionsAdapter.
         @Override
         public void onClick(View view) {
 
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", currentApp.getPackageName() , null));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            view.getContext().startActivity(intent);
         }
     }
 }

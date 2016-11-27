@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
+        Collections.sort(appsData);
         adapter = new AppDataAdapter(appsData);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
