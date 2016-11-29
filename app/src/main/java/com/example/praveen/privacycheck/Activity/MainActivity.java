@@ -4,6 +4,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +14,13 @@ import android.util.Log;
 
 import com.example.praveen.privacycheck.Adapters.AppDataAdapter;
 import com.example.praveen.privacycheck.Models.AppData;
-import com.example.praveen.privacycheck.Utils.DividerItemDecoration;
 import com.example.praveen.privacycheck.R;
+import com.example.praveen.privacycheck.Utils.DividerItemDecoration;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private Toolbar toolbar;
+    private List<String> allPermissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.app_list_recycler_view);
 
-
+        allPermissions = new ArrayList<>();
         List<PackageInfo> apps = getPackageManager().getInstalledPackages(0);
         List<ApplicationInfo> packages = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA);
         ArrayList<AppData> appsData = new ArrayList<>();
@@ -62,6 +67,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        for (AppData app : appsData) {
+            if(app.getPermissions() != null && app.getPermissions().length > 0) {
+                allPermissions.addAll(Arrays.asList(app.getPermissions()));
+            }
+        }
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(Environment.getExternalStorageDirectory() + "/response.txt");
+            for (String str : allPermissions) {
+                writer.write(str + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         Collections.sort(appsData);
         adapter = new AppDataAdapter(appsData);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
