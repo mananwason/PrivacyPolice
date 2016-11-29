@@ -1,4 +1,4 @@
-package com.example.praveen.privacycheck;
+package com.example.praveen.privacycheck.Utils;
 
 /**
  * Created by Manan Wason on 27/11/16.

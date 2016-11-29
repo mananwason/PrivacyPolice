@@ -1,4 +1,4 @@
-package com.example.praveen.privacycheck;
+package com.example.praveen.privacycheck.Models;
 
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;

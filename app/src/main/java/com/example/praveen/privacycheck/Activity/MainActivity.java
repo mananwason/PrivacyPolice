@@ -1,4 +1,4 @@
-package com.example.praveen.privacycheck;
+package com.example.praveen.privacycheck.Activity;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -10,6 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+
+import com.example.praveen.privacycheck.Adapters.AppDataAdapter;
+import com.example.praveen.privacycheck.Models.AppData;
+import com.example.praveen.privacycheck.Utils.DividerItemDecoration;
+import com.example.praveen.privacycheck.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.app_list_recycler_view);
+
 
         List<PackageInfo> apps = getPackageManager().getInstalledPackages(0);
         List<ApplicationInfo> packages = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA);

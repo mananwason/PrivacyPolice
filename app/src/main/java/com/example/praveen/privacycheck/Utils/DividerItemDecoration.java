@@ -1,4 +1,4 @@
-package com.example.praveen.privacycheck;
+package com.example.praveen.privacycheck.Utils;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.example.praveen.privacycheck.R;
 
 /**
  * Created by Praveen on 11/10/2016.
@@ -18,7 +20,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
     public DividerItemDecoration(Context context) {
-        mDivider = ContextCompat.getDrawable(context,R.drawable.line_divider);
+        mDivider = ContextCompat.getDrawable(context, R.drawable.line_divider);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.praveen.privacycheck;
+package com.example.praveen.privacycheck.Adapters;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.praveen.privacycheck.Models.AppData;
+import com.example.praveen.privacycheck.Utils.Constants;
+import com.example.praveen.privacycheck.Activity.PermissionsDisplayActivity;
+import com.example.praveen.privacycheck.R;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.praveen.privacycheck;
+package com.example.praveen.privacycheck.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+
+import com.example.praveen.privacycheck.Adapters.PermissionsAdapter;
+import com.example.praveen.privacycheck.Models.AppData;
+import com.example.praveen.privacycheck.Utils.Constants;
+import com.example.praveen.privacycheck.Utils.DividerItemDecoration;
+import com.example.praveen.privacycheck.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
