@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.praveen.privacycheck.Adapters.AppDataAdapter;
+import com.example.praveen.privacycheck.Adapters.DangerousAppsPermissionsAdapter;
 import com.example.praveen.privacycheck.Models.AppData;
 import com.example.praveen.privacycheck.R;
 import com.example.praveen.privacycheck.Utils.DividerItemDecoration;
@@ -32,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter adapter1;
     private Toolbar toolbar;
     private List<String> allPermissions;
     private List<String> dangerousPermissions;
     private List<String> normalPermissions;
     public static HashMap<String, ArrayList<AppData>> dangerousApps;
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
         Collections.sort(appsData);
         adapter = new AppDataAdapter(appsData);
+        adapter1 = new DangerousAppsPermissionsAdapter(appsData);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext()));
@@ -168,8 +172,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.toggleView) {
 
+        if (id == R.id.toggleView) {
+            if(flag){
+                recyclerView.setAdapter(adapter);
+                flag = false;
+            }
+            else {
+                recyclerView.setAdapter(adapter1);
+                flag = true;
+
+            }
         }
         return super.onOptionsItemSelected(item);
     }
