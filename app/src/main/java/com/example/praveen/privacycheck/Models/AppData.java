@@ -12,14 +12,24 @@ public class AppData implements Parcelable, Comparable<AppData> {
     private int versionCode = 0;
     private Drawable icon;
     private String[] permissions;
+    private double score;
 
-    public AppData(String appName, String packageName, String versionName, int versionCode, Drawable icon, String[] permissions) {
+    public AppData(String appName, String packageName, String versionName, int versionCode, Drawable icon, String[] permissions, double score) {
         this.appName = appName;
         this.packageName = packageName;
         this.versionName = versionName;
         this.versionCode = versionCode;
         this.icon = icon;
         this.permissions = permissions;
+        this.score = score;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
     protected AppData(Parcel in) {
@@ -28,6 +38,7 @@ public class AppData implements Parcelable, Comparable<AppData> {
         versionName = in.readString();
         versionCode = in.readInt();
         permissions = in.createStringArray();
+        score = in.readDouble();
     }
 
     public static final Creator<AppData> CREATOR = new Creator<AppData>() {
@@ -102,6 +113,7 @@ public class AppData implements Parcelable, Comparable<AppData> {
         parcel.writeString(versionName);
         parcel.writeInt(versionCode);
         parcel.writeStringArray(permissions);
+        parcel.writeDouble(score);
     }
 
     @Override

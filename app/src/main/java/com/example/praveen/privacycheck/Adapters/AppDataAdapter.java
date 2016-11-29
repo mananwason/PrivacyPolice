@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.praveen.privacycheck.Activity.DangerousAppsDisplayActivity;
-import com.example.praveen.privacycheck.Models.AppData;
-import com.example.praveen.privacycheck.Utils.Constants;
 import com.example.praveen.privacycheck.Activity.PermissionsDisplayActivity;
+import com.example.praveen.privacycheck.Models.AppData;
 import com.example.praveen.privacycheck.R;
+import com.example.praveen.privacycheck.Utils.Constants;
 
 import java.util.ArrayList;
 
@@ -39,6 +38,7 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.icon.setImageDrawable(apps.get(position).getIcon());
         holder.name.setText(apps.get(position).getAppName());
+        holder.count.setText(String.valueOf(String.format("%.2f", apps.get(position).getScore())));
 
     }
 
@@ -50,6 +50,7 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name;
+        public TextView count;
         public ImageView icon;
 
         public MyViewHolder(View view) {
@@ -57,13 +58,12 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.MyViewHo
 
             icon = (ImageView) view.findViewById(R.id.app_icon);
             name = (TextView) view.findViewById(R.id.app_name);
+            count = (TextView) view.findViewById(R.id.count);
             view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-//            Intent intent = new Intent(view.getContext(), DangerousAppsDisplayActivity.class);
-
             Intent intent = new Intent(view.getContext(), PermissionsDisplayActivity.class);
             Bundle bundle = new Bundle();
             AppData clicked = apps.get(getAdapterPosition());

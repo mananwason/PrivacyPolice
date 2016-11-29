@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> allPermissions;
     private List<String> dangerousPermissions;
     private List<String> normalPermissions;
-    public static HashMap<String, ArrayList<AppData> > dangerousApps;
+    public static HashMap<String, ArrayList<AppData>> dangerousApps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
                             p.versionName,
                             p.versionCode,
                             p.applicationInfo.loadIcon(getPackageManager()),
-                            pi.requestedPermissions);
+                            pi.requestedPermissions,
+                            0);
                     appsData.add(newInfo);
                     // to get application permissions
                 } catch (PackageManager.NameNotFoundException e) {
@@ -79,28 +80,37 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        for (AppData app : appsData) {
-            if(app.getPermissions() != null && app.getPermissions().length > 0) {
+        for (int i = 0 ; i<appsData.size() ; i++) {
+            AppData app = appsData.get(i);
+            if (app.getPermissions() != null && app.getPermissions().length > 0) {
                 allPermissions.addAll(Arrays.asList(app.getPermissions()));
 
 //                List of all the dangerous Apps
                 String[] permissions = app.getPermissions();
+                int score = 0;
+
                 for (String permission : permissions) {
                     if (permission.contains("android")) {
                         String[] temp = permission.split("\\.");
                         permission = temp[temp.length - 1];
-
                         for (String key : Permissions.DANGEROUS_GROUP_NAMES) {
-                            if(Permissions.DANGEROUS_GROUPS_PERMISSIONS.get(key).contains(permission)) {
-                                if(dangerousApps.keySet().contains(key) == false)
+                            if (Permissions.DANGEROUS_GROUPS_PERMISSIONS.get(key).contains(permission)) {
+                                if (dangerousApps.keySet().contains(key) == false) {
                                     dangerousApps.put(key, new ArrayList<AppData>());
-
-                                if(dangerousApps.get(key).contains(app) == false)
+                                }
+                                if (dangerousApps.get(key).contains(app) == false) {
+                                    score += 1;
                                     dangerousApps.get(key).add(app);
+
+                                }
                             }
                         }
                     }
                 }
+                Double ascore = (score/9.0)*10.0;
+                app.setScore(ascore);
+                Log.d("ABC", ascore+" " + score);
+
             }
         }
 
@@ -134,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+//        Log.d("ABC", appsData.get(2).getScore()+"");
 
         Collections.sort(appsData);
         adapter = new AppDataAdapter(appsData);
@@ -157,9 +168,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.toggleView) {
+        if (id == R.id.toggleView) {
 
         }
-        super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 }
