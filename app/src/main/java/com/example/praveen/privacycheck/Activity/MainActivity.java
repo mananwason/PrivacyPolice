@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> allPermissions;
     private List<String> dangerousPermissions;
     private List<String> normalPermissions;
+    public static HashMap<String, ArrayList<AppData> > dangerousApps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         List<PackageInfo> apps = getPackageManager().getInstalledPackages(0);
         List<ApplicationInfo> packages = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA);
         ArrayList<AppData> appsData = new ArrayList<>();
+        dangerousApps = new HashMap<>();
         for (int i = 0; i < apps.size(); i++) {
             // to get only launchable apps data
             // to get all apps remove this if condition and also remove the packages list
@@ -73,10 +76,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
         for (AppData app : appsData) {
             if(app.getPermissions() != null && app.getPermissions().length > 0) {
                 allPermissions.addAll(Arrays.asList(app.getPermissions()));
+
+//                List of all the dangerous Apps
+                String[] permissions = app.getPermissions();
+                for (String permission : permissions) {
+                    if (permission.contains("android")) {
+                        String[] temp = permission.split(".");
+                        permission = temp[temp.length - 1];
+                        for (String key : Permissions.DANGEROUS_GROUPS.keySet()) {
+                            if(Permissions.DANGEROUS_GROUPS.get(key).contains(permission)) {
+                                if(dangerousApps.keySet().contains(key) == false)
+                                    dangerousApps.put(key, new ArrayList<AppData>());
+
+                                dangerousApps.get(key).add(app);
+                            }
+                        }
+                    }
+                }
             }
+        }
+
+        for (String key : Permissions.DANGEROUS_GROUPS.keySet()) {
+            if (dangerousApps.keySet().contains(key) == false)
+                dangerousApps.put(key, new ArrayList<AppData>());
         }
 
         for (int i = 0; i < allPermissions.size(); i++) {
@@ -85,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 String[] temp = permission.split(".");
                 permission = temp[temp.length - 1];
                 allPermissions.set(i, permission);
-                if(Permissions.DANGEROUS_PERMISSIONS.contains(permission)) {
+                if (Permissions.DANGEROUS_PERMISSIONS.contains(permission)) {
                     dangerousPermissions.add(permission);
                 } else {
                     normalPermissions.add(permission);
