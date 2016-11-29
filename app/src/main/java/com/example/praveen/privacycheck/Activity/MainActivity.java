@@ -16,6 +16,7 @@ import com.example.praveen.privacycheck.Adapters.AppDataAdapter;
 import com.example.praveen.privacycheck.Models.AppData;
 import com.example.praveen.privacycheck.R;
 import com.example.praveen.privacycheck.Utils.DividerItemDecoration;
+import com.example.praveen.privacycheck.Utils.Permissions;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private Toolbar toolbar;
     private List<String> allPermissions;
+    private List<String> dangerousPermissions;
+    private List<String> normalPermissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.app_list_recycler_view);
 
         allPermissions = new ArrayList<>();
+        dangerousPermissions = new ArrayList<>();
+        normalPermissions = new ArrayList<>();
+
         List<PackageInfo> apps = getPackageManager().getInstalledPackages(0);
         List<ApplicationInfo> packages = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA);
         ArrayList<AppData> appsData = new ArrayList<>();
@@ -72,6 +78,21 @@ public class MainActivity extends AppCompatActivity {
                 allPermissions.addAll(Arrays.asList(app.getPermissions()));
             }
         }
+
+        for (int i = 0; i < allPermissions.size(); i++) {
+            String permission = allPermissions.get(i);
+            if (permission.contains("android")) {
+                String[] temp = permission.split(".");
+                permission = temp[temp.length - 1];
+                allPermissions.set(i, permission);
+                if(Permissions.DANGEROUS_PERMISSIONS.contains(permission)) {
+                    dangerousPermissions.add(permission);
+                } else {
+                    normalPermissions.add(permission);
+                }
+            }
+        }
+
         FileWriter writer = null;
         try {
             writer = new FileWriter(Environment.getExternalStorageDirectory() + "/response.txt");
