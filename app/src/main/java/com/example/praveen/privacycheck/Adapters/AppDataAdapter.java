@@ -1,6 +1,10 @@
 package com.example.praveen.privacycheck.Adapters;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.PermissionGroupInfo;
+import android.content.pm.PermissionInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
