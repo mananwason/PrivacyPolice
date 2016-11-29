@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.praveen.privacycheck.Adapters.AppDataAdapter;
 import com.example.praveen.privacycheck.Models.AppData;
@@ -144,5 +146,20 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(itemAnimator);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.toggleView) {
+
+        }
+        super.onOptionsItemSelected(item);
     }
 }
