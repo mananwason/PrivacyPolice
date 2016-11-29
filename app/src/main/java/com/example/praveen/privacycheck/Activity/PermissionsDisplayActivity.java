@@ -2,60 +2,53 @@ package com.example.praveen.privacycheck.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.example.praveen.privacycheck.Adapters.PermissionsAdapter;
+import com.example.praveen.privacycheck.Adapters.PagerAdapter;
 import com.example.praveen.privacycheck.Models.AppData;
-import com.example.praveen.privacycheck.Utils.Constants;
-import com.example.praveen.privacycheck.Utils.DividerItemDecoration;
-import com.example.praveen.privacycheck.Utils.Permissions;
 import com.example.praveen.privacycheck.R;
+import com.example.praveen.privacycheck.Utils.Constants;
 import com.example.praveen.privacycheck.Utils.Permissions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Manan Wason on 27/11/16.
  */
 
 public class PermissionsDisplayActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
     private AppData currentApp;
     private Toolbar toolbar;
-    private List<String> permissions;
-    private List<String> sortedPermissions;
-    private List<String> dangerousSortedPermissions;
-    private List<String> normalSortedPermissions;
+    private ArrayList<String> permissions;
+    private ArrayList<String> sortedPermissions;
+    private ArrayList<String> dangerousSortedPermissions;
+    private ArrayList<String> normalSortedPermissions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.permissions_tab_layout);
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         Bundle b = this.getIntent().getExtras();
-        permissions = new ArrayList<>();
         dangerousSortedPermissions = new ArrayList<>();
         normalSortedPermissions = new ArrayList<>();
+
         if (b != null) {
             currentApp = b.getParcelable(Constants.APP_NAME);
-            Log.d("ABC", currentApp.getAppName());
-            permissions = Arrays.asList(currentApp.getPermissions());
+            permissions = new ArrayList<>(Arrays.asList(currentApp.getPermissions()));
             sortedPermissions = new ArrayList<>();
-            Log.d("ABC", permissions.toString());
             for (String permission : permissions) {
                 if (permission.contains("android")) {
-                    String outputString = "";
                     int position = 0;
                     for (int i = 0; i < permission.length(); i++) {
                         char c = permission.charAt(i);
@@ -76,23 +69,16 @@ public class PermissionsDisplayActivity extends AppCompatActivity {
                     Log.d("normal permission", permission);
                 }
             }
+
         }
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(),
+                PermissionsDisplayActivity.this, sortedPermissions, dangerousSortedPermissions, normalSortedPermissions, currentApp));
 
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
 
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-
-        recyclerView = (RecyclerView) findViewById(R.id.app_list_recycler_view);
-        adapter = new PermissionsAdapter(sortedPermissions, currentApp);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext()));
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(200);
-        itemAnimator.setRemoveDuration(200);
-        recyclerView.setItemAnimator(itemAnimator);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 }

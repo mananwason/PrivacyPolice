@@ -6,4 +6,6 @@ package com.example.praveen.privacycheck.Utils;
 
 public class Constants {
     public static final String APP_NAME = "app_name";
+    public static final String LIST = "list";
+    public static final String APP_DAT = "data";
 }
