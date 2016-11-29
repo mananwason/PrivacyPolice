@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.praveen.privacycheck.Activity.DangerousAppsDisplayActivity;
 import com.example.praveen.privacycheck.Models.AppData;
 import com.example.praveen.privacycheck.Utils.Constants;
 import com.example.praveen.privacycheck.Activity.PermissionsDisplayActivity;
@@ -61,6 +62,8 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.MyViewHo
 
         @Override
         public void onClick(View view) {
+//            Intent intent = new Intent(view.getContext(), DangerousAppsDisplayActivity.class);
+
             Intent intent = new Intent(view.getContext(), PermissionsDisplayActivity.class);
             Bundle bundle = new Bundle();
             AppData clicked = apps.get(getAdapterPosition());

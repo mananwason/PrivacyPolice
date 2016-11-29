@@ -1,8 +1,10 @@
 package com.example.praveen.privacycheck.Utils;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by satyamkumar on 29/11/16.
@@ -24,19 +26,22 @@ public class Permissions {
             "READ_CALL_LOG", "WRITE_CALL_LOG", "ADD_VOICEMAIL", "USE_SIP", "PROCESS_OUTGOING_CALLS", "BODY_SENSORS", "SEND_SMS",
             "RECEIVE_SMS", "READ_SMS", "RECEIVE_WAP_PUSH", "RECEIVE_MMS", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE");
 
-    public static HashMap<String, List<String> > DANGEROUS_GROUPS = new HashMap<String, List <String> >();
+    public static final List<String> DANGEROUS_GROUP_NAMES = Arrays.asList("CALENDAR", "CAMERA", "CONTACTS", "LOCATION", "MICROPHONE",
+            "PHONE", "SENSORS", "SMS", "STORAGE");
+
+    public static HashMap<String, List<String> > DANGEROUS_GROUPS_PERMISSIONS = new HashMap<>();
 
     static {
-        DANGEROUS_GROUPS.put("CALENDAR", Arrays.asList("READ_CALENDAR", "WRITE_CALENDAR"));
-        DANGEROUS_GROUPS.put("CAMERA", Arrays.asList("CAMERA"));
-        DANGEROUS_GROUPS.put("CONTACTS", Arrays.asList("READ_CONTACTS", "WRITE_CONTACTS", "GET_ACCOUNTS"));
-        DANGEROUS_GROUPS.put("LOCATION", Arrays.asList("ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"));
-        DANGEROUS_GROUPS.put("MICROPHONE", Arrays.asList("RECORD_AUDIO"));
-        DANGEROUS_GROUPS.put("PHONE", Arrays.asList("READ_PHONE_STATE", "CALL_PHONE",
+        DANGEROUS_GROUPS_PERMISSIONS.put("CALENDAR", Arrays.asList("READ_CALENDAR", "WRITE_CALENDAR"));
+        DANGEROUS_GROUPS_PERMISSIONS.put("CAMERA", Arrays.asList("CAMERA"));
+        DANGEROUS_GROUPS_PERMISSIONS.put("CONTACTS", Arrays.asList("READ_CONTACTS", "WRITE_CONTACTS", "GET_ACCOUNTS"));
+        DANGEROUS_GROUPS_PERMISSIONS.put("LOCATION", Arrays.asList("ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"));
+        DANGEROUS_GROUPS_PERMISSIONS.put("MICROPHONE", Arrays.asList("RECORD_AUDIO"));
+        DANGEROUS_GROUPS_PERMISSIONS.put("PHONE", Arrays.asList("READ_PHONE_STATE", "CALL_PHONE",
                 "READ_CALL_LOG", "WRITE_CALL_LOG", "ADD_VOICEMAIL", "USE_SIP", "PROCESS_OUTGOING_CALLS"));
-        DANGEROUS_GROUPS.put("SENSORS", Arrays.asList("BODY_SENSORS"));
-        DANGEROUS_GROUPS.put("SMS", Arrays.asList("SEND_SMS",
+        DANGEROUS_GROUPS_PERMISSIONS.put("SENSORS", Arrays.asList("BODY_SENSORS"));
+        DANGEROUS_GROUPS_PERMISSIONS.put("SMS", Arrays.asList("SEND_SMS",
                 "RECEIVE_SMS", "READ_SMS", "RECEIVE_WAP_PUSH", "RECEIVE_MMS"));
-        DANGEROUS_GROUPS.put("STORAGE", Arrays.asList("READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"));
+        DANGEROUS_GROUPS_PERMISSIONS.put("STORAGE", Arrays.asList("READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"));
     }
 }

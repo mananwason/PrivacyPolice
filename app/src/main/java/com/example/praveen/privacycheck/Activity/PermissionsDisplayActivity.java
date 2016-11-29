@@ -63,10 +63,10 @@ public class PermissionsDisplayActivity extends AppCompatActivity {
             for (String permission : sortedPermissions) {
                 if(Permissions.DANGEROUS_PERMISSIONS.contains(permission)) {
                     dangerousSortedPermissions.add(permission);
-                    Log.d("dangerous permission", permission);
+//                    Log.d("dangerous permission", permission);
                 } else {
                     normalSortedPermissions.add(permission);
-                    Log.d("normal permission", permission);
+//                    Log.d("normal permission", permission);
                 }
             }
 

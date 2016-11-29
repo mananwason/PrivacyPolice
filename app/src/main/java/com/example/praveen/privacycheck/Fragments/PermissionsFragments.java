@@ -31,7 +31,8 @@ public class PermissionsFragments extends Fragment {
     public static PermissionsFragments newInstance(ArrayList<String> PermissionsList, AppData appData) {
         Bundle args = new Bundle();
         args.putSerializable(Constants.LIST, PermissionsList);
-        args.putParcelable(Constants.APP_DAT, appData);
+        if(appData != null)
+            args.putParcelable(Constants.APP_DAT, appData);
         PermissionsFragments fragment = new PermissionsFragments();
         fragment.setArguments(args);
         return fragment;

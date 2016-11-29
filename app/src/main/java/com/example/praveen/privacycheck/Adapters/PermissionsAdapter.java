@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class PermissionsAdapter extends RecyclerView.Adapter<PermissionsAdapter.
 
         @Override
         public void onClick(View view) {
-
+            Log.d("Intent", "Permission Adapter");
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                     Uri.fromParts("package", currentApp.getPackageName() , null));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

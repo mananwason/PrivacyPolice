@@ -85,14 +85,16 @@ public class MainActivity extends AppCompatActivity {
                 String[] permissions = app.getPermissions();
                 for (String permission : permissions) {
                     if (permission.contains("android")) {
-                        String[] temp = permission.split(".");
+                        String[] temp = permission.split("\\.");
                         permission = temp[temp.length - 1];
-                        for (String key : Permissions.DANGEROUS_GROUPS.keySet()) {
-                            if(Permissions.DANGEROUS_GROUPS.get(key).contains(permission)) {
+
+                        for (String key : Permissions.DANGEROUS_GROUP_NAMES) {
+                            if(Permissions.DANGEROUS_GROUPS_PERMISSIONS.get(key).contains(permission)) {
                                 if(dangerousApps.keySet().contains(key) == false)
                                     dangerousApps.put(key, new ArrayList<AppData>());
 
-                                dangerousApps.get(key).add(app);
+                                if(dangerousApps.get(key).contains(app) == false)
+                                    dangerousApps.get(key).add(app);
                             }
                         }
                     }
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        for (String key : Permissions.DANGEROUS_GROUPS.keySet()) {
+        for (String key : Permissions.DANGEROUS_GROUP_NAMES) {
             if (dangerousApps.keySet().contains(key) == false)
                 dangerousApps.put(key, new ArrayList<AppData>());
         }
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < allPermissions.size(); i++) {
             String permission = allPermissions.get(i);
             if (permission.contains("android")) {
-                String[] temp = permission.split(".");
+                String[] temp = permission.split("\\.");
                 permission = temp[temp.length - 1];
                 allPermissions.set(i, permission);
                 if (Permissions.DANGEROUS_PERMISSIONS.contains(permission)) {
