@@ -13,7 +13,9 @@ import com.example.praveen.privacycheck.Adapters.PermissionsAdapter;
 import com.example.praveen.privacycheck.Models.AppData;
 import com.example.praveen.privacycheck.Utils.Constants;
 import com.example.praveen.privacycheck.Utils.DividerItemDecoration;
+import com.example.praveen.privacycheck.Utils.Permissions;
 import com.example.praveen.privacycheck.R;
+import com.example.praveen.privacycheck.Utils.Permissions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +32,8 @@ public class PermissionsDisplayActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private List<String> permissions;
     private List<String> sortedPermissions;
-
+    private List<String> dangerousSortedPermissions;
+    private List<String> normalSortedPermissions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class PermissionsDisplayActivity extends AppCompatActivity {
 
         Bundle b = this.getIntent().getExtras();
         permissions = new ArrayList<>();
+        dangerousSortedPermissions = new ArrayList<>();
+        normalSortedPermissions = new ArrayList<>();
         if (b != null) {
             currentApp = b.getParcelable(Constants.APP_NAME);
             Log.d("ABC", currentApp.getAppName());
@@ -54,16 +59,25 @@ public class PermissionsDisplayActivity extends AppCompatActivity {
                     int position = 0;
                     for (int i = 0; i < permission.length(); i++) {
                         char c = permission.charAt(i);
-                        if(Character.isUpperCase(c)){
+                        if (Character.isUpperCase(c)) {
                             position = i;
                             break;
                         }
                     }
                     sortedPermissions.add(permission.substring(position));
                 }
-
+            }
+            for (String permission : sortedPermissions) {
+                if(Permissions.DANGEROUS_PERMISSIONS.contains(permission)) {
+                    dangerousSortedPermissions.add(permission);
+                    Log.d("dangerous permission", permission);
+                } else {
+                    normalSortedPermissions.add(permission);
+                    Log.d("normal permission", permission);
+                }
             }
         }
+
 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
