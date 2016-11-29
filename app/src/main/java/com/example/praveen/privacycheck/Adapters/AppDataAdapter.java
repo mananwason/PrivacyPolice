@@ -65,6 +65,7 @@ public class AppDataAdapter extends RecyclerView.Adapter<AppDataAdapter.MyViewHo
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), PermissionsDisplayActivity.class);
+
             Bundle bundle = new Bundle();
             AppData clicked = apps.get(getAdapterPosition());
             bundle.putParcelable(Constants.APP_NAME, clicked);

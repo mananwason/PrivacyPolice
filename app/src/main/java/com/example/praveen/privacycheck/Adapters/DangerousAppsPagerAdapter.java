@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
+import com.example.praveen.privacycheck.Fragments.DangerousPermissionsFragments;
 import com.example.praveen.privacycheck.Fragments.PermissionsFragments;
 import com.example.praveen.privacycheck.Models.AppData;
 import com.example.praveen.privacycheck.Utils.Permissions;
@@ -32,7 +33,6 @@ public class DangerousAppsPagerAdapter extends FragmentPagerAdapter {
         this.context = context;
         this.appsByDangerousGroups = appsByDangerousGroups;
         tabTitles = Permissions.DANGEROUS_GROUP_NAMES;
-        Log.d("size of hashmap", "" + this.appsByDangerousGroups.keySet().size());
         this.pageCount = appsByDangerousGroups.keySet().size();
     }
 
@@ -49,7 +49,7 @@ public class DangerousAppsPagerAdapter extends FragmentPagerAdapter {
         for (AppData app : apps) {
             appNames.add(app.getAppName());
         }
-        return PermissionsFragments.newInstance(appNames, null);
+        return DangerousPermissionsFragments.newInstance(apps);
 
     }
 
