@@ -1,5 +1,6 @@
 package com.example.praveen.privacycheck.Activity;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -18,6 +19,7 @@ import com.example.praveen.privacycheck.Adapters.AppDataAdapter;
 import com.example.praveen.privacycheck.Adapters.DangerousAppsPermissionsAdapter;
 import com.example.praveen.privacycheck.Models.AppData;
 import com.example.praveen.privacycheck.R;
+import com.example.praveen.privacycheck.Utils.Constants;
 import com.example.praveen.privacycheck.Utils.DividerItemDecoration;
 import com.example.praveen.privacycheck.Utils.Permissions;
 
@@ -174,15 +176,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.toggleView) {
-            if(flag){
-                recyclerView.setAdapter(adapter);
-                flag = false;
-            }
-            else {
-                recyclerView.setAdapter(adapter1);
-                flag = true;
-
-            }
+            Intent intent = new Intent(MainActivity.this, DangerousAppsDisplayActivity.class);
+            MainActivity.this.startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -20,7 +20,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".Activity.DangerousAppsDisplayActivity" />
+        <activity android:name=".Activity.DangerousAppsDisplayActivity" android:parentActivityName=".Activity.MainActivity" />
     </application>
 
 </manifest>
